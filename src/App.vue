@@ -1,32 +1,26 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <router-view />
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+export default {
+  data() {
+    return {
+      viewportWidth: window.innerWidth,
+    };
+  },
+  created() {
+    this.handleResize = this.handleResize.bind(this); // 确保this在回调中正确指向  
+    window.addEventListener('resize', this.handleResize);
+  },
 
-nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+  methods: {
+    handleResize() {
+      this.viewportWidth = window.innerWidth;
+      this.$store.commit('setViewportWidth', this.viewportWidth);
+      
+    },
+  },
+};  
+</script>
+<style lang="scss"></style>
